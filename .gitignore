@@ -1,2 +1,5 @@
 *.pyc
 .idea
+examples/echo/aside
+examples/puremvc/aside
+bower_components

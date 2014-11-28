@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Medcal</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMaximumSize</enum>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QMdiArea" name="mdiArea"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMedical">
+    <property name="title">
+     <string>Menu Utama</string>
+    </property>
+    <addaction name="actionDashboard"/>
+    <addaction name="separator"/>
+    <addaction name="actionSetting"/>
+   </widget>
+   <widget class="QMenu" name="menuPendaftaran">
+    <property name="title">
+     <string>Pendaftaran</string>
+    </property>
+    <addaction name="actionPasien"/>
+    <addaction name="separator"/>
+    <addaction name="actionJadwal_Kedatangan"/>
+   </widget>
+   <widget class="QMenu" name="menuPencarian">
+    <property name="title">
+     <string>Pencarian</string>
+    </property>
+    <addaction name="actionPasien_2"/>
+    <addaction name="separator"/>
+    <addaction name="actionJadwal_Kedatangan_2"/>
+    <addaction name="separator"/>
+    <addaction name="actionPesan"/>
+    <addaction name="actionAktifitas"/>
+   </widget>
+   <widget class="QMenu" name="menuBantuan">
+    <property name="title">
+     <string>Bantuan</string>
+    </property>
+    <addaction name="actionTentang"/>
+    <addaction name="actionFAQ"/>
+    <addaction name="separator"/>
+    <addaction name="actionTentang_2"/>
+   </widget>
+   <addaction name="menuMedical"/>
+   <addaction name="menuPendaftaran"/>
+   <addaction name="menuPencarian"/>
+   <addaction name="menuBantuan"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionPasien">
+   <property name="text">
+    <string>Pasien Baru</string>
+   </property>
+  </action>
+  <action name="actionJadwal_Kedatangan">
+   <property name="text">
+    <string>Kedatangan &amp;&amp; Janji</string>
+   </property>
+  </action>
+  <action name="actionPasien_2">
+   <property name="text">
+    <string>Pasien</string>
+   </property>
+  </action>
+  <action name="actionDokter">
+   <property name="text">
+    <string>Dokter</string>
+   </property>
+  </action>
+  <action name="actionJadwal_Kedatangan_2">
+   <property name="text">
+    <string>Jadwal Kedatangan &amp;&amp; Janji</string>
+   </property>
+  </action>
+  <action name="actionPesan">
+   <property name="text">
+    <string>Pesan</string>
+   </property>
+  </action>
+  <action name="actionAktifitas">
+   <property name="text">
+    <string>Aktivitas</string>
+   </property>
+  </action>
+  <action name="actionDashboard">
+   <property name="text">
+    <string>Dashboard</string>
+   </property>
+  </action>
+  <action name="actionSetting">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Pengaturan</string>
+   </property>
+  </action>
+  <action name="actionTentang">
+   <property name="text">
+    <string>Cara Penggunaan</string>
+   </property>
+  </action>
+  <action name="actionFAQ">
+   <property name="text">
+    <string>FAQ</string>
+   </property>
+  </action>
+  <action name="actionTentang_2">
+   <property name="text">
+    <string>Tentang</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
