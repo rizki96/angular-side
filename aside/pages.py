@@ -12,18 +12,23 @@ PAGE_FILE_TYPE = "pageFileType"
 PAGE_URL_TYPE = "pageURLType"
 
 # Page register and retrieve
+
+
 def _proxy():
-    pageProxy = facade.AsideFacade.getInstance().retrieveProxy(PageProxy.NAME)
-    if not pageProxy:
+    page_proxy = facade.AsideFacade.getInstance().retrieveProxy(PageProxy.NAME)
+    if not page_proxy:
         facade.AsideFacade.getInstance().registerProxy(PageProxy())
-        pageProxy = facade.AsideFacade.getInstance().retrieveProxy(PageProxy.NAME)
-    return pageProxy
+        page_proxy = facade.AsideFacade.getInstance().retrieveProxy(PageProxy.NAME)
+    return page_proxy
+
 
 def register_file(name, page):
     _proxy().install(name, page, typ=PAGE_FILE_TYPE)
 
+
 def register_url(name, page):
     _proxy().install(name, page, typ=PAGE_URL_TYPE)
+
 
 def retrieve(name, **kwargs):
     content = None
@@ -52,7 +57,6 @@ class PageProxy(puremvc.patterns.proxy.Proxy):
         super(PageProxy, self).__init__(PageProxy.NAME, [])
 
     def install(self, name, page, typ=PAGE_FILE_TYPE):
-        value = {}
         if typ == PAGE_URL_TYPE:
             value = {'fullpath': page, 'type': PAGE_URL_TYPE}
         else:

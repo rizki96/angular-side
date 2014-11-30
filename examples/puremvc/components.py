@@ -4,29 +4,32 @@ from PySide import QtCore, QtGui, QtWebKit
 from ui import main, web_form
 from aside import components
 
-def centerCoord(parent, WIDTH=640, HEIGHT=480):
+
+def center_coord(parent, width=640, height=480):
     desktop = parent
     screen_width = desktop.width()
     screen_height = desktop.height()
-    if WIDTH > screen_width: WIDTH = screen_width
-    if HEIGHT > screen_height: HEIGHT = screen_height
-    x = (screen_width - WIDTH) / 2
-    y = (screen_height - HEIGHT) / 2
-    return (x,y,WIDTH,HEIGHT)
+    if width > screen_width:
+        width = screen_width
+    if height > screen_height:
+        height = screen_height
+    x = (screen_width - width) / 2
+    y = (screen_height - height) / 2
+    return x, y, width, height
 
 
 class QtMainWindow(QtGui.QMainWindow):
 
     widget = {}
+    form_ui = None
 
     def __init__(self, parent=None):
         super(QtMainWindow, self).__init__(parent)
         self.ui = main.Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.mdiArea.addSubWindow(self.create_form(), QtCore.Qt.FramelessWindowHint)
-        x, y, WIDHT, HEIGHT = centerCoord(QtGui.QApplication.desktop(), 1024, 768)
-        self.setGeometry(x, y, WIDHT, HEIGHT)
-
+        x, y, width, height = center_coord(QtGui.QApplication.desktop(), 1024, 768)
+        self.setGeometry(x, y, width, height)
 
     def create_form(self):
         self.form_ui = web_form.Ui_WebForm()
