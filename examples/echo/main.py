@@ -21,7 +21,7 @@ def refresh(inject=None, **kwargs):
 
     #inject.webView.triggerPageAction(QtWebKit.QWebPage.ReloadAndBypassCache, True)
     current_path = os.path.dirname(os.path.realpath(__file__))
-    inject.webView.setHtml(pages.retrieve('index', current_path=current_path), "file:///")
+    inject.webView.setHtml(pages.retrieve('index', BASE_PATH=current_path), "file:///")
 
 
 class EchoObject():
@@ -57,7 +57,7 @@ class QtMainWindow(QtGui.QMainWindow):
         self.ui.webView.setPage(components.WebPage())
         #self.ui.webView.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
         current_path = os.path.dirname(os.path.realpath(__file__))
-        self.ui.webView.setHtml(pages.retrieve('index', current_path=current_path), "file:///")
+        self.ui.webView.setHtml(pages.retrieve('index', BASE_PATH=current_path), "file:///")
         # center pos
         x, y, width, height = center_coord(QtGui.QApplication.desktop(), 640, 480)
         self.setGeometry(x, y, width, height)

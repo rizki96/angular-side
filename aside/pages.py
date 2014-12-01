@@ -44,7 +44,7 @@ def retrieve(name, **kwargs):
         temp = Template(content)
         params = kwargs
         js_file = '{}/js/aside.js'.format(os.path.dirname(os.path.realpath(__file__)))
-        params.update({'aside_js': js_file})
+        params.update({'ASIDE_JS': js_file})
         return temp.substitute(**params)
     return ''
 
