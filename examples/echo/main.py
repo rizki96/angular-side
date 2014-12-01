@@ -1,5 +1,6 @@
 __author__ = 'rizki'
 
+import logging
 import os
 import sys
 
@@ -11,7 +12,25 @@ from aside import components, pages, hooks, events
 def echo(inject=None, **kwargs):
     if 'message' in kwargs:
         message = kwargs['message']
-        print 'Python: Got \'%s\' from Javascript' % message
+        logging.info('Python Function: Got \'%s\' from Javascript' % message)
+        events.emit_signal('echo', message='pong')
+
+
+def refresh(inject=None, **kwargs):
+    logging.info('Python Function: Page Refresh from Javascript')
+
+    #inject.webView.triggerPageAction(QtWebKit.QWebPage.ReloadAndBypassCache, True)
+    current_path = os.path.dirname(os.path.realpath(__file__))
+    inject.webView.setHtml(pages.retrieve('index', current_path=current_path), "file:///")
+
+
+class EchoObject():
+
+    def __init__(self, ui):
+        self.ui = ui
+
+    def receiver(self, message=None, **kwargs):
+        logging.info('Python Object: Got \'%s\' from Javascript' % message)
         events.emit_signal('echo', message='pong')
 
 
@@ -36,7 +55,7 @@ class QtMainWindow(QtGui.QMainWindow):
         self.ui.setupUi(self)
         # default angular-side WebPage
         self.ui.webView.setPage(components.WebPage())
-        self.ui.webView.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
+        #self.ui.webView.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
         current_path = os.path.dirname(os.path.realpath(__file__))
         self.ui.webView.setHtml(pages.retrieve('index', current_path=current_path), "file:///")
         # center pos
@@ -67,10 +86,13 @@ if __name__ == '__main__':
     qt_app = QtGui.QApplication(sys.argv)
 
     pages.register_file('index', 'index.html')
-    hooks.register_function('echo', echo, None)
     events.register_signal('echo')
 
     main = QtMainWindow()
+    hooks.register_function('echo', echo, main.ui)
+    hooks.register_function('refresh', refresh, main.ui)
+    hooks.register_object('echo_obj', EchoObject(main.ui))
+
     main.show()
 
     sys.exit(qt_app.exec_())

@@ -40,13 +40,44 @@ angular.module('aside.hooks', [])
 });
 
 angular.module('aside.events', [])
-.service('events', function() {
+.service('events', function($timeout) {
+
+    var connect_event = function(name, func) {
+        try {
+            var sig = eval(name); // eval mungkin harus diganti
+            if (sig !== undefined) {
+                sig.py_event.connect(func);
+                return;
+            }
+        } catch (e) {
+            if (e instanceof SyntaxError) {
+            }
+        }
+        $timeout(function() {connect_event(name, func)}, 500);
+    };
+
+    var disconnect_event = function(name, func) {
+        try {
+            var sig = eval(name); // eval mungkin harus diganti
+            if (sig !== undefined) {
+                sig.py_event.disconnect(func);
+            }
+        } catch (e) {
+            if (e instanceof SyntaxError) {
+            }
+        }
+    };
+
     return {
         bind: function(name, func) {
             if (func === undefined)
                 console.log('func undefined');
-            var sig = eval(name); // eval mungkin harus diganti
-            sig.py_event.connect(func);
+            connect_event(name, func);
+        },
+        unbind: function(name, func) {
+            if (func === undefined)
+                console.log('func undefined');
+            disconnect_event(name, func);
         }
     };
 });

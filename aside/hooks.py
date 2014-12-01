@@ -39,11 +39,18 @@ class HookProxy(puremvc.patterns.proxy.Proxy):
         self.hooks[name] = {"hook": func_obj, "type": typ, "inject": inject}
 
     def invoke(self, name, **kwargs):
-        if name in self.hooks:
-            if self.get_type(name) == HOOK_FUNCTION_TYPE:
+        if self.get_type(name) == HOOK_FUNCTION_TYPE:
+            if name in self.hooks:
                 kwargs.update({'inject': self.hooks[name]['inject']})
                 return self.hooks[name]['hook'](**kwargs)
-            return self.hooks[name]['hook']
+        else:
+            try:
+                obj, method = name.split(".")
+                if obj in self.hooks and self.get_type(obj) == HOOK_OBJECT_TYPE:
+                    func = getattr(self.hooks[obj]['hook'], method)
+                    return func(**kwargs)
+            except ValueError:
+                pass
         return None
 
     def get_type(self, name):

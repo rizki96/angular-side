@@ -48,8 +48,8 @@ class WebPage(QtWebKit.QWebPage):
             QtWebKit.QWebSettings.LocalContentCanAccessFileUrls,
         ]:
             QtWebKit.QWebSettings.globalSettings().setAttribute(attr, True)
-        #self.loadFinished.connect(self.on_load_finished)
-        self.loadStarted.connect(self.on_page_started)
+        self.loadFinished.connect(self.on_load_finished)
+        #self.loadStarted.connect(self.on_page_started)
 
     def javaScriptConsoleMessage(self, msg, lineNumber, sourceID):
         self.logger.info("JsConsole(%s:%d): %s" % (sourceID, lineNumber, msg))
