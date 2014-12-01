@@ -57,14 +57,9 @@ angular.module('aside.events', [])
     };
 
     var disconnect_event = function(name, func) {
-        try {
-            var sig = eval(name); // eval mungkin harus diganti
-            if (sig !== undefined) {
-                sig.py_event.disconnect(func);
-            }
-        } catch (e) {
-            if (e instanceof SyntaxError) {
-            }
+        var sig = eval(name); // eval mungkin harus diganti
+        if (sig !== undefined) {
+            sig.py_event.disconnect(func);
         }
     };
 
