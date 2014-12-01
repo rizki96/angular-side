@@ -32,6 +32,7 @@ def _proxy():
     return event_proxy
 
 
+# TODO: check for duplicate signal connection
 class PyEvent(QtCore.QObject):
 
     py_event = QtCore.Signal(str)
