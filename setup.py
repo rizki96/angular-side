@@ -13,7 +13,7 @@ setup(
     license='LICENSE.txt',
     description='pyside and angular js connector',
     long_description=open('README.md').read(),
-    install_requires=[
-        "git+https://github.com/PureMVC/puremvc-python-multicore-framework.git",
-    ],
+    #install_requires=[
+    #    "git+https://github.com/PureMVC/puremvc-python-multicore-framework.git",
+    #],
 )
