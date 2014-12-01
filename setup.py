@@ -9,7 +9,7 @@ setup(
     author_email='iskandar.rizki@gmail.com',
     packages=['aside'],
     scripts=[],
-    package_data = {'aside' : ["aside/js/*"] },
+    package_data = {'aside' : ["js/*"] },
     url='git+https://github.com/rizki96/angular-side.git',
     license='LICENSE.txt',
     description='pyside and angular js connector',
