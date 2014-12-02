@@ -1,25 +1,25 @@
 angular.module('echoApp', ['echoApp.app']);
 var echo_app = angular.module('echoApp.app', ['aside']);
 
-echo_app.controller('echoCtrl', ["$scope", "hooks", "events", function($scope, hooks, events) {
+echo_app.controller('echoCtrl', ["$scope", "asideHooks", "asideEvents", function($scope, asideHooks, asideEvents) {
 
     $scope.onEchoClick = function() {
         params = JSON.stringify({"message": "ping"});
-        hooks.call('echo', params);
+        asideHooks.call('echo', params);
     };
 
     $scope.onEchoObjectClick = function() {
         params = JSON.stringify({"message": "ping"});
-        hooks.call('echo_obj.receiver', params);
+        asideHooks.call('echo_obj.receiver', params);
     };
 
     $scope.onEchoFuncDisable = function() {
-        events.unbind('echo', $scope.echoFunc);
+        asideEvents.unbind('echo', $scope.echoFunc);
     };
 
     $scope.onPageRefresh = function() {
         params = "{}";
-        hooks.call('refresh', params);
+        asideHooks.call('refresh', params);
     };
 
     $scope.echoFunc = function(params) {
@@ -27,6 +27,6 @@ echo_app.controller('echoCtrl', ["$scope", "hooks", "events", function($scope, h
         console.log("Javascript Function: Got '" + obj_params.message + "' from Python" );
     };
 
-    events.bind("echo", $scope.echoFunc);
+    asideEvents.bind("echo", $scope.echoFunc);
 
 }]);

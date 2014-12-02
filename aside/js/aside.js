@@ -31,7 +31,7 @@
 angular.module('aside', ['aside.hooks', 'aside.events']);
 
 angular.module('aside.hooks', [])
-.service('hooks', function() {
+.service('asideHooks', function() {
     return {
         call: function(name, params) {
             return py_bridge.call(name, params);
@@ -40,7 +40,7 @@ angular.module('aside.hooks', [])
 });
 
 angular.module('aside.events', [])
-.service('events', function($timeout) {
+.service('asideEvents', function($timeout) {
 
     var connect_event = function(name, func) {
         try {
