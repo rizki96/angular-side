@@ -48,7 +48,7 @@ def retrieve(name, **kwargs):
         content = temp.safe_substitute(**params)
         soup = BeautifulSoup(content)
         for tag in soup.find_all(type='text/ng-template'):
-            if tag.name.strip() == "script" and tag["src"]:
+            if tag.name.strip() == "script" and "src" in tag.attrs:
                 script = open(str(tag["src"])).read()
                 tag.string = ''
                 tag.string.replace_with(script)
