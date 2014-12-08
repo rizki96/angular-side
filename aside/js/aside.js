@@ -31,10 +31,21 @@
 angular.module('aside', ['aside.hooks', 'aside.events']);
 
 angular.module('aside.hooks', [])
-.service('asideHooks', function() {
+.service('asideHooks', function($timeout) {
+    var call_hooks = function(name, params) {
+        try {
+            var bridge = eval("py_bridge");
+            return bridge.call(name, params);
+        } catch (e) {
+            if (e instanceof SyntaxError) {
+            }
+        }
+        $timeout(function() {call_hooks(name, params)}, 500);
+    };
+
     return {
         call: function(name, params) {
-            return py_bridge.call(name, params);
+            return call_hooks(name, params);
         }
     };
 });
