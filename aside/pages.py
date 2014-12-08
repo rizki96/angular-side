@@ -52,7 +52,7 @@ def retrieve(name, **kwargs):
                 script = open(str(tag["src"])).read()
                 tag.string = ''
                 tag.string.replace_with(script)
-        return str(soup.contents[0])
+        return soup.html
     return ''
 
 
