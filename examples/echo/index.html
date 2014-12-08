@@ -3,6 +3,9 @@
     <script src="$BASE_PATH/bower_components/angular/angular.js"></script>
     <script src="$ASIDE_JS"></script>
     <script src="$BASE_PATH/app.js"></script>
+
+    <script type="text/ng-template" src="$BASE_PATH/templates/test.html" id="templates/test.html"></script>
+
 </head>
 <body>
     <div ng-controller="echoCtrl">
@@ -10,6 +13,10 @@
         <button ng-click="onEchoObjectClick()"> ECHO Object </button><br />
         <button ng-click="onEchoFuncDisable()"> ECHO Func Disable </button><br />
         <button ng-click="onPageRefresh()"> Page Refresh </button><br />
+
+        <a href="#" ng-click="currentTpl='templates/test.html'" id="tpl-link">Load inlined template</a>
+        <div id="tpl-content" ng-include src="currentTpl"></div>
+
     </div>
 </body>
 </html>

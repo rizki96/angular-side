@@ -1,1 +1,2 @@
 git+https://github.com/PureMVC/puremvc-python-multicore-framework.git
+BeatifulSoup4

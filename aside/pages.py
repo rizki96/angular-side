@@ -3,9 +3,9 @@ __author__ = 'rizki'
 import os
 import urllib2
 
+from bs4 import BeautifulSoup
 from string import Template
 import puremvc.patterns.proxy
-
 import facade
 
 PAGE_FILE_TYPE = "pageFileType"
@@ -45,7 +45,14 @@ def retrieve(name, **kwargs):
         params = kwargs
         js_file = '{}/js/aside.js'.format(os.path.dirname(os.path.realpath(__file__)))
         params.update({'ASIDE_JS': js_file})
-        return temp.safe_substitute(**params)
+        content = temp.safe_substitute(**params)
+        soup = BeautifulSoup(content)
+        for tag in soup.find_all(type='text/ng-template'):
+            if tag.name.strip() == "script" and tag["src"]:
+                script = open(str(tag["src"])).read()
+                tag.string = ''
+                tag.string.replace_with(script)
+        return str(soup.contents[0])
     return ''
 
 
