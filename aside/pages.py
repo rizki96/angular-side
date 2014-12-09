@@ -48,10 +48,16 @@ def retrieve(name, **kwargs):
         content = temp.safe_substitute(**params)
         soup = BeautifulSoup(content)
         for tag in soup.find_all(type='text/ng-template'):
+            # NOTE: recursive script embed is not allowed
             if tag.name.strip() == "script" and "src" in tag.attrs:
-                script = open(str(tag["src"])).read()
-                tag.string = ''
-                tag.string.replace_with(script)
+                try:
+                    script = open(str(tag["src"])).read()
+                    tag.string = ''
+                    temp = Template(content)
+                    script = temp.safe_substitute(**params)
+                    tag.string.replace_with(script)
+                except Exception:
+                    pass
         return '<!DOCTYPE html>\r\n%s' % unicode(soup.html)
     return ''
 
