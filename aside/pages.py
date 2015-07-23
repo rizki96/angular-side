@@ -44,7 +44,8 @@ def retrieve(name, **kwargs):
         temp = Template(content)
         params = kwargs
         js_file = '{}/js/aside.js'.format(os.path.dirname(os.path.realpath(__file__)))
-        params.update({'ASIDE_JS': js_file})
+        if not ('ASIDE_JS' in params and params['ASIDE_JS']):
+            params.update({'ASIDE_JS': js_file})
         content = temp.safe_substitute(**params)
         soup = BeautifulSoup(content)
         for tag in soup.find_all(type='text/ng-template'):
