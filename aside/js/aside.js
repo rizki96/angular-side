@@ -31,7 +31,7 @@
 angular.module('aside', ['aside.hooks', 'aside.events']);
 
 angular.module('aside.hooks', [])
-.service('asideHooks', function($timeout) {
+.service('asideHooks', function($q, $timeout) {
     var call_hooks = function(name, params) {
         try {
             var bridge = eval("py_bridge");
@@ -43,9 +43,29 @@ angular.module('aside.hooks', [])
         $timeout(function() {call_hooks(name, params)}, 500);
     };
 
+    var promise_hooks = function(name, params) {
+        var deferred = $q.defer();
+
+        try {
+            var bridge = eval("py_bridge");
+            retval = bridge.call(name, params);
+            deferred.resolve(retval);
+        } catch (e) {
+            if (e instanceof SyntaxError) {
+                deffered.reject({error: "promise_hooks call error"});
+            }
+        }
+        $timeout(function() {promise_hooks(name, params)}, 500);
+
+        return deferred.promise;
+    }
+
     return {
         call: function(name, params) {
             return call_hooks(name, params);
+        },
+        promise: function(name, params) {
+            return promise_hooks(name, params);
         }
     };
 });
