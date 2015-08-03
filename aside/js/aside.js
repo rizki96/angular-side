@@ -52,7 +52,9 @@ angular.module('aside.hooks', [])
             deferred.resolve(retval);
         } catch (e) {
             if (e instanceof SyntaxError) {
-                deffered.reject({error: "promise_hooks call error"});
+                deffered.reject({error: "promise_hooks call syntax error"});
+            } else {
+                deffered.reject({error: "promise_hooks call unknown error"});
             }
         }
         $timeout(function() {promise_hooks(name, params)}, 500);
