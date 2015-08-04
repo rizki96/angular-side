@@ -1,7 +1,7 @@
 __author__ = 'rizki'
 
 import logging
-import json
+import simplejson as json
 
 from PySide import QtCore, QtGui, QtWebKit
 
@@ -10,14 +10,16 @@ import events
 
 class PyBridge(QtCore.QObject):
 
-    def __init__(self):
+    def __init__(self, frame):
         super(PyBridge, self).__init__()
+        self.frame = frame
 
     @QtCore.Slot(str, str)
     def call(self, name, params):
         # convert string to object
         params = json.loads(params)
-        return hooks.invoke(name, **params)
+        result = hooks.invoke(name, **params)
+        self.frame.addToJavaScriptWindowObject("py_result", json.dumps(result).decode('latin1'))
 
 
 class WebPage(QtWebKit.QWebPage):
@@ -30,7 +32,7 @@ class WebPage(QtWebKit.QWebPage):
             logger = logging
             logger.getLogger().setLevel(logging.INFO)
         self.logger = logger
-        self.py_bridge = PyBridge()
+        self.py_bridge = PyBridge(self.mainFrame())
         for attr in [
             QtWebKit.QWebSettings.AutoLoadImages,
             QtWebKit.QWebSettings.JavascriptEnabled,

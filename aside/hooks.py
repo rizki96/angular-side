@@ -17,7 +17,7 @@ def register_object(name, obj):
 
 
 def invoke(name, **kwargs):
-    _proxy().invoke(name, **kwargs)
+    return _proxy().invoke(name, **kwargs)
 
 
 def _proxy():
