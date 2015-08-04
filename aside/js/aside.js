@@ -35,7 +35,9 @@ angular.module('aside.hooks', [])
     var call_hooks = function(name, params) {
         try {
             var bridge = eval("py_bridge");
-            return bridge.call(name, params);
+            bridge.call(name, params);
+            var retval = eval("window.py_result");
+            return retval;
         } catch (e) {
             if (e instanceof SyntaxError) {
             }
@@ -48,16 +50,15 @@ angular.module('aside.hooks', [])
 
         try {
             var bridge = eval("py_bridge");
-            retval = bridge.call(name, params);
-            deferred.resolve(retval);
+            bridge.call(name, params);
         } catch (e) {
             if (e instanceof SyntaxError) {
-                deffered.reject({error: "promise_hooks call syntax error"});
+                deferred.reject({error: "promise_hooks call syntax error"});
             } else {
-                deffered.reject({error: "promise_hooks call unknown error"});
+                deferred.reject({error: "promise_hooks call unknown error"});
             }
         }
-        $timeout(function() {promise_hooks(name, params)}, 500);
+        $timeout(function() { var retval = eval("window.py_result"); deferred.resolve(retval); }, 500);
 
         return deferred.promise;
     }

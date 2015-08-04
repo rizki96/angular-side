@@ -8,6 +8,7 @@ from PySide import QtCore, QtGui, QtWebKit
 import hooks
 import events
 
+
 class PyBridge(QtCore.QObject):
 
     def __init__(self, frame):
@@ -19,7 +20,8 @@ class PyBridge(QtCore.QObject):
         # convert string to object
         params = json.loads(params)
         result = hooks.invoke(name, **params)
-        self.frame.addToJavaScriptWindowObject("py_result", json.dumps(result).decode('latin1'))
+        if result:
+            self.frame.evaluateJavaScript("window.py_result = %s;" % result)
 
 
 class WebPage(QtWebKit.QWebPage):
