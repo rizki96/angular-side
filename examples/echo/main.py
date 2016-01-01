@@ -21,7 +21,8 @@ def refresh(inject=None, **kwargs):
 
     #inject.webView.triggerPageAction(QtWebKit.QWebPage.ReloadAndBypassCache, True)
     current_path = os.path.dirname(os.path.realpath(__file__))
-    inject.webView.setHtml(pages.retrieve('index', BASE_PATH=current_path), "file:///")
+    retrieved = pages.retrieve('index', BASE_PATH=current_path)
+    inject.webView.setHtml(*retrieved)
 
 
 class EchoObject():
