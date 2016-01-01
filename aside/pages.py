@@ -32,13 +32,16 @@ def register_url(name, page):
 
 def retrieve(name, **kwargs):
     content = None
+    prefix = None
     if _proxy().page_type(name) == PAGE_FILE_TYPE:
         fullpath = _proxy().path(name)
         content = open(str(fullpath)).read()
+        prefix = 'file:///'
     elif _proxy().page_type(name) == PAGE_URL_TYPE:
         fullpath = _proxy().path(name)
         response = urllib2.urlopen(fullpath)
         content = response.read()
+        prefix = 'http://'
 
     if content:
         temp = Template(content)
@@ -55,8 +58,8 @@ def retrieve(name, **kwargs):
                 tag.string.replace_with(script)
         temp = Template(soup.prettify())
         content = temp.safe_substitute(**params)
-        return '<!DOCTYPE html>\r\n%s' % unicode(content)
-    return ''
+        return '<!DOCTYPE html>\r\n%s' % unicode(content), prefix
+    return '', prefix
 
 
 class PageProxy(puremvc.patterns.proxy.Proxy):
